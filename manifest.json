@@ -1,0 +1,18 @@
+{
+    "name": "每日时间表",
+    "short_name": "时间表",
+    "description": "追踪每日时间表完成情况，记录连续打卡天数",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#0f0f1a",
+    "theme_color": "#667eea",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}

@@ -1,0 +1,567 @@
+/* ===== Design Tokens ===== */
+:root {
+    /* Background */
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #1a1a2e;
+    --bg-card: #16213e;
+    --bg-card-hover: #1a2744;
+
+    /* Text */
+    --text-primary: #e8e8f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6c6c88;
+
+    /* Accent Colors for categories */
+    --color-morning: #64748b;
+    --color-work: #3b82f6;
+    --color-orange: #f97316;
+    --color-blue: #06b6d4;
+    --color-green: #22c55e;
+    --color-purple: #a855f7;
+    --color-yellow: #eab308;
+    --color-red: #ef4444;
+    --color-navy: #6366f1;
+
+    /* Gradients */
+    --gradient-header: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-streak: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-progress: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+
+    /* Heatmap */
+    --heat-0: #1a1a2e;
+    --heat-1: #2d4a3e;
+    --heat-2: #3d7a4e;
+    --heat-3: #4daa5e;
+    --heat-4: #22c55e;
+
+    /* Misc */
+    --border-radius: 16px;
+    --border-radius-sm: 10px;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.15);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans SC', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+        radial-gradient(ellipse at 20% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(118, 75, 162, 0.08) 0%, transparent 50%);
+}
+
+/* ===== App Container ===== */
+.app-container {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 24px 16px 40px;
+}
+
+/* ===== Header ===== */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 24px;
+    animation: fadeInDown 0.6s ease;
+}
+
+.app-title {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: var(--gradient-header);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.app-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-secondary);
+    border: 1px solid rgba(240, 147, 251, 0.2);
+    padding: 8px 16px;
+    border-radius: 50px;
+    box-shadow: 0 0 16px rgba(240, 147, 251, 0.1);
+    transition: var(--transition);
+    cursor: default;
+}
+
+.streak-badge:hover {
+    box-shadow: 0 0 24px rgba(240, 147, 251, 0.2);
+    transform: translateY(-1px);
+}
+
+.streak-flame {
+    font-size: 1.2rem;
+    animation: flamePulse 1.5s ease-in-out infinite;
+}
+
+.streak-count {
+    font-size: 1.4rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    background: var(--gradient-streak);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.streak-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ===== Progress Bar ===== */
+.progress-section {
+    margin-bottom: 28px;
+    animation: fadeInDown 0.6s ease 0.1s both;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--gradient-progress);
+    background-size: 200% auto;
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: shimmer 3s linear infinite;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ===== Schedule Cards ===== */
+.schedule-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+}
+
+.schedule-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.schedule-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--card-accent);
+    border-radius: 4px 0 0 4px;
+    transition: var(--transition);
+}
+
+.schedule-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+}
+
+.schedule-card:active {
+    transform: translateX(2px) scale(0.99);
+}
+
+.schedule-card.completed {
+    background: rgba(34, 197, 94, 0.08);
+    border-color: rgba(34, 197, 94, 0.15);
+}
+
+.schedule-card.completed::before {
+    background: var(--color-green);
+}
+
+.schedule-card.completed .card-title {
+    text-decoration: line-through;
+    text-decoration-color: rgba(34, 197, 94, 0.5);
+    color: var(--text-muted);
+}
+
+.schedule-card.completed .card-time {
+    color: var(--text-muted);
+}
+
+/* Checkbox */
+.card-checkbox {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    border-radius: 8px;
+    border: 2px solid var(--card-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    background: transparent;
+}
+
+.schedule-card.completed .card-checkbox {
+    background: var(--color-green);
+    border-color: var(--color-green);
+    animation: checkPop 0.3s ease;
+}
+
+.card-checkbox svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transform: scale(0);
+    transition: var(--transition);
+}
+
+.schedule-card.completed .card-checkbox svg {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Card Content */
+.card-icon {
+    font-size: 1.4rem;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.card-time {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-top: 2px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Stagger entrance animation */
+.schedule-card:nth-child(1) { animation: fadeInUp 0.5s ease 0.05s both; }
+.schedule-card:nth-child(2) { animation: fadeInUp 0.5s ease 0.10s both; }
+.schedule-card:nth-child(3) { animation: fadeInUp 0.5s ease 0.15s both; }
+.schedule-card:nth-child(4) { animation: fadeInUp 0.5s ease 0.20s both; }
+.schedule-card:nth-child(5) { animation: fadeInUp 0.5s ease 0.25s both; }
+.schedule-card:nth-child(6) { animation: fadeInUp 0.5s ease 0.30s both; }
+.schedule-card:nth-child(7) { animation: fadeInUp 0.5s ease 0.35s both; }
+.schedule-card:nth-child(8) { animation: fadeInUp 0.5s ease 0.40s both; }
+.schedule-card:nth-child(9) { animation: fadeInUp 0.5s ease 0.45s both; }
+
+/* ===== History Section ===== */
+.history-section {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    margin-bottom: 24px;
+    overflow: hidden;
+    animation: fadeInUp 0.5s ease 0.5s both;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.history-header:hover {
+    background: var(--bg-card-hover);
+}
+
+.history-header h2 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.history-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.toggle-arrow {
+    color: var(--text-muted);
+    transition: var(--transition);
+    font-size: 0.85rem;
+}
+
+.toggle-arrow.open {
+    transform: rotate(180deg);
+}
+
+.history-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-content.open {
+    max-height: 400px;
+}
+
+.heatmap-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    padding: 0 20px 12px;
+}
+
+.heatmap-cell {
+    aspect-ratio: 1;
+    border-radius: 6px;
+    background: var(--heat-0);
+    position: relative;
+    transition: var(--transition);
+    cursor: default;
+}
+
+.heatmap-cell:hover {
+    transform: scale(1.15);
+    z-index: 1;
+}
+
+.heatmap-cell .tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2a2a40;
+    color: var(--text-primary);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.heatmap-cell:hover .tooltip {
+    opacity: 1;
+}
+
+.heatmap-legend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 20px 18px;
+}
+
+.legend-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin: 0 4px;
+}
+
+.legend-cell {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+}
+
+/* ===== Stats Section ===== */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+    animation: fadeInUp 0.5s ease 0.55s both;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 18px 12px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-glow);
+}
+
+.stat-icon {
+    font-size: 1.5rem;
+    margin-bottom: 6px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    background: var(--gradient-header);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 2px;
+}
+
+/* ===== Footer ===== */
+.app-footer {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    padding: 16px 0;
+    animation: fadeInUp 0.5s ease 0.6s both;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes checkPop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+@keyframes flamePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15) rotate(5deg); }
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+    .app-container {
+        padding: 16px 12px 32px;
+    }
+
+    .app-title {
+        font-size: 1.3rem;
+    }
+
+    .streak-badge {
+        padding: 6px 12px;
+    }
+
+    .streak-count {
+        font-size: 1.2rem;
+    }
+
+    .schedule-card {
+        padding: 14px 14px;
+        gap: 10px;
+    }
+
+    .card-icon {
+        font-size: 1.2rem;
+        width: 30px;
+    }
+
+    .card-title {
+        font-size: 0.88rem;
+    }
+
+    .stats-section {
+        gap: 8px;
+    }
+
+    .stat-card {
+        padding: 14px 8px;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+    }
+}

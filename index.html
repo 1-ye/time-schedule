@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日时间表 · Daily Schedule Tracker</title>
+    <meta name="description" content="追踪每日时间表完成情况，记录连续打卡天数">
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="每日时间表">
+    <link rel="apple-touch-icon" href="icon-512.png">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1 class="app-title">⏰ 每日时间表</h1>
+                <p class="app-date" id="currentDate"></p>
+            </div>
+            <div class="header-right">
+                <div class="streak-badge" id="streakBadge">
+                    <span class="streak-flame">🔥</span>
+                    <span class="streak-count" id="streakCount">0</span>
+                    <span class="streak-label">天连续</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar -->
+        <div class="progress-section">
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressText">0 / 9 已完成</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+
+        <!-- Schedule Cards -->
+        <main class="schedule-list" id="scheduleList">
+            <!-- Cards will be injected by JS -->
+        </main>
+
+        <!-- History Section -->
+        <section class="history-section">
+            <div class="history-header" id="historyToggle">
+                <h2>📅 历史记录 <span class="history-subtitle">（过去30天）</span></h2>
+                <span class="toggle-arrow" id="toggleArrow">▼</span>
+            </div>
+            <div class="history-content" id="historyContent">
+                <div class="heatmap-container" id="heatmapContainer">
+                    <!-- Heatmap cells will be injected by JS -->
+                </div>
+                <div class="heatmap-legend">
+                    <span class="legend-label">少</span>
+                    <span class="legend-cell" style="background: var(--heat-0)"></span>
+                    <span class="legend-cell" style="background: var(--heat-1)"></span>
+                    <span class="legend-cell" style="background: var(--heat-2)"></span>
+                    <span class="legend-cell" style="background: var(--heat-3)"></span>
+                    <span class="legend-cell" style="background: var(--heat-4)"></span>
+                    <span class="legend-label">多</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Cards -->
+        <section class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="totalDays">0</div>
+                <div class="stat-label">总打卡天数</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="bestStreak">0</div>
+                <div class="stat-label">最长连续</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-value" id="avgCompletion">0%</div>
+                <div class="stat-label">平均完成率</div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="app-footer">
+            <p>坚持就是力量 💪 每天进步一点点</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registered:', reg.scope))
+                    .catch(err => console.log('SW registration failed:', err));
+            });
+        }
+    </script>
+</body>
+
+</html>
